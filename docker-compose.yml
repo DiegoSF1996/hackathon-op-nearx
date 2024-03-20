@@ -1,8 +1,8 @@
 version: '3.3'
 services:
   frontend:
-    image: reactjs
-    container_name: dapp
+    depends_on:
+      - deploy
     build:
       context: ./dapp
       dockerfile: Dockerfile
