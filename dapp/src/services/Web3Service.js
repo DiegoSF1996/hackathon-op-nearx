@@ -1,7 +1,6 @@
 import { Web3 } from 'web3';
 import ABI from "./ABI.json"
-
-const CONTRACT_ADDRESS = "";
+const CONTRACT_ADDRESS = ABI.address;
 
 export async function login() {
     if (!window.ethereum) throw new Error("MetaMask não encontrada");
@@ -11,6 +10,14 @@ export async function login() {
     localStorage.setItem("wallet", accounts[0]);
     return accounts[0];
 
+}
+
+export async function cadastrarNovoUsuario(dados) {
+    const wallet = localStorage.getItem("wallet");
+    if (!wallet) throw new Error("Não autorizado");
+
+    const contract = await obterContrato();
+    return contract.methods.cadastrarNovoUsuario(dados).send();
 }
 
 export async function estaLogado() {
@@ -24,14 +31,23 @@ async function obterContrato() {
     if (!wallet) throw new Error("Não autorizado");
 
     const web3 = new Web3(window.ethereum);
-    return new web3.eth.Contract(ABI, CONTRACT_ADDRESS, { from: wallet });
+    const abi = ABI.abi;
+    return new web3.eth.Contract(abi, CONTRACT_ADDRESS, { from: wallet, gas: 3000000 });
 }
 
-export async function cadastrar(dados) {
+export async function checarUsuarioJaCadastrado() {
     const wallet = localStorage.getItem("wallet");
     if (!wallet) throw new Error("Não autorizado");
 
-    const web3 = new Web3(window.ethereum);
     const contract = await obterContrato();
-    return contract.methods.cadastrar().call();
+    return contract.methods.checarUsuarioExiste().call();
+}
+
+
+export async function obterDadosDoUsuario() {
+    const wallet = localStorage.getItem("wallet");
+    if (!wallet) throw new Error("Não autorizado");
+
+    const contract = await obterContrato();
+    return contract.methods.logar().call();
 }
