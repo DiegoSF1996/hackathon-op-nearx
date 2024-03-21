@@ -75,6 +75,12 @@ contract FLAP is ERC20, ERC20Burnable, Ownable, ERC20Permit {
         return usuario[msg.sender];
     }
 
+    function checarUsuarioExiste() external view returns (bool ){
+        if(bytes(usuario[msg.sender].primeiro_nome).length == 0){
+            return false;
+        }
+        return true;
+    }
     
     //cadastrar novo projeto
     function cadastrarNovoProjeto(struct_projeto memory _projeto, string memory _tags ) external  returns (struct_projeto memory ){
