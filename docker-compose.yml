@@ -24,3 +24,5 @@ services:
     build:
       context: ./smartcontracts
       dockerfile: Dockerfile.deploy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

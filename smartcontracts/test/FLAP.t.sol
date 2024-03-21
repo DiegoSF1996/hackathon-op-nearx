@@ -3,8 +3,9 @@ pragma solidity ^0.8.18;
 
 import {BaseSetup} from "./BaseSetup.t.sol";
 
-contract CounterTest is BaseSetup {
-    function setUp() public override {
+contract FLAPTest is BaseSetup {
+     
+    /* function setUp() public override {
         BaseSetup.setUp();
         counter.setNumber(0);
     }
@@ -17,5 +18,5 @@ contract CounterTest is BaseSetup {
     function testFuzz_SetNumber(uint256 x) public {
         counter.setNumber(x);
         assertEq(counter.number(), x);
-    }
+    } */
 }

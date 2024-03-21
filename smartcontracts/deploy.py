@@ -23,7 +23,8 @@ class Contract:
 CHAIN_ID = 31337
 CONTRACT_SCRIPT_NAME = "deploy.local.s.sol"
 TRANSACTIONS_PATH = f"broadcast/{CONTRACT_SCRIPT_NAME}/{CHAIN_ID}/run-latest.json"
-TARGET_DIR = "../frontend/generated/deployedContracts.ts"
+#TARGET_DIR = "../dapp/generated/deployedContracts.ts"
+TARGET_DIR = "../dapp/src/services/ABI.json"
 
 
 
@@ -45,18 +46,24 @@ with open(TRANSACTIONS_PATH) as deployed_contracts:
 
 
 json_config = {
-    CHAIN_ID: [{"name": "localhost", "chainId": str(CHAIN_ID), "contracts": {}}]
+    #CHAIN_ID: [{"name": "localhost", "chainId": str(CHAIN_ID), "contracts": {}}]
 }
 
 
 for contract in contracts:
-    json_config[CHAIN_ID][0]["contracts"][contract.name] = {
+    json_config =  {
         "address": contract.address,
         "abi": contract.abi,
     }
+    '''json_config[CHAIN_ID][0]["contracts"][contract.name] = {
+        "address": contract.address,
+        "abi": contract.abi,
+    }'''
 
 
-typescript_content = f"const deployedContracts = {dumps(json_config)} as const; \n\n export default deployedContracts"
+#typescript_content = f"const deployedContracts = {dumps(json_config)} as const; \n\n export default deployedContracts"
+
+typescript_content = f"{dumps(json_config)}"
 
 
 with open(TARGET_DIR, "w") as ts_file:

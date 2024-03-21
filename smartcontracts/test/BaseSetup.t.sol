@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import {Counter} from "../src/Counter.sol";
+import {FLAP} from "../src/FLAP.sol";
 import {Utils} from "./Utils.t.sol";
 
 contract BaseSetup is Utils {
-    Counter counter;
+    FLAP flap;
 
     address[] _users;
     address controller;
@@ -33,7 +33,7 @@ contract BaseSetup is Utils {
         vm.label(zero, "ZERO");
 
         vm.startPrank(controller);
-        counter = new Counter();
+        flap = new FLAP();
         vm.stopPrank();
     }
 
