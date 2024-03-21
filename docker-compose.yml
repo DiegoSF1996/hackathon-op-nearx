@@ -1,11 +1,13 @@
-version: '3.8'
+version: '3.3'
 services:
   frontend:
     depends_on:
       - deploy
     build:
-      context: ./frontend
+      context: ./dapp
       dockerfile: Dockerfile
+    volumes:
+      - './dapp/src:/app/src'
     ports:
       - 3000:3000
 
