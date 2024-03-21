@@ -1,46 +1,31 @@
 "use client";
-import { useState } from 'react';
-import { login } from '@/services/Web3Service'
+import { useEffect, useState } from 'react';
+import { obterDadosDoUsuario } from '@/services/Web3Service'
 import Image from 'next/image';
+import { Navbar } from '@/components/navbar';
 
 
 export default function Home() {
-  const [connectedAccount, setConnectedAccount] = useState('null');
-  const [message, setMessage] = useState('null');
+  const [dadosUsuario, setDadosUsuario] = useState('null');
 
-
-  function btnLogin() {
-    login().then(account => setMessage(account)).catch(err => {
-      console.log(err);
-      setMessage(err);
-    })
+  function obterUsuario(){
+    obterDadosDoUsuario().then(dados=>setDadosUsuario(dads))
   }
-  async function connectMetamask() {
-    //check metamask is installed
-    if (window.ethereum) {
-      // instantiate Web3 with the injected provider
-      const web3 = new Web3(window.ethereum);
 
-      //request user to connect accounts (Metamask will prompt)
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-      //get the connected accounts
-      const accounts = await web3.eth.getAccounts();
-      //show the first connected account in the react page
-      setConnectedAccount(accounts[0]);
-    } else {
-      alert('Please download metamask');
-    }
-  }
+  useEffect(()=>{
+    obterDadosDoUsuario().then(dados=>setDadosUsuario(dados))
+  },[])
   return (
     <main>
+      <Navbar />
+
       <form className="mx-auto mt-16 max-w-xl sm:mt-20">
         <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
           
           <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
               <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2>
-              <p class="mt-1 text-sm leading-6 text-gray-600">This information will be displayed publicly so be careful what you share.</p>
+              <p class="mt-1 text-sm leading-6 text-gray-600">{dadosUsuario[0]} Thiss information will be displayed publicly so be careful what you share.</p>
 
               <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div class="sm:col-span-4">

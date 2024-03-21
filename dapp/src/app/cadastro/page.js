@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { login, estaLogado, cadastrar } from '@/services/Web3Service'
-import { InputPrecoMoeda, Teste } from '@/components/input'
+import { cadastrarNovoUsuario,checarUsuarioJaCadastrado, estaLogado } from '@/services/Web3Service'
 import { useRouter } from 'next/navigation';
 
 export default function Cadastrar() {
@@ -20,10 +19,24 @@ export default function Cadastrar() {
   useEffect(() => {
     estaLogado().then(account => {
       setWallet(account);
-    }).catch(err => {
+      checarUsuarioJaCadastrado().then(ja_cadastrado => {
+        if(ja_cadastrado == true){
+          push('/projetos/novo');
+        }
+        console.log(ja_cadastrado);
+      }).catch(err => {
+       // push('/');
+        console.log(err);
+
+        alert(err);
+      })
+    })
+    .catch(err => {
       push('/');
       alert(err);
     })
+
+    
   }, []);
 
   const handleChange = e => {
@@ -36,7 +49,13 @@ export default function Cadastrar() {
   };
 
   function salvar() {
-
+    cadastrarNovoUsuario([
+      formulario.first_name,
+      formulario.last_name,
+      formulario.checkbox_people_ong,
+      formulario.nome_organizacao?? "",
+      formulario.email,
+   ]).then(dados =>{  push('/projetos/novo') }).catch(dados =>{ alert("Erro, verifique se os dados estão corretamente preenchidos."); console.log(dados)})
     return false;
   }
 
