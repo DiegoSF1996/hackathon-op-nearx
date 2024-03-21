@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN npm install
+RUN clear && echo -e " \n \e[00;31m== Instalando depedências do front - Algumas vezes o NPM install da erro,  não consegui descobrir o motivo, suba o container novamente que vai funcionar ==\e[00m \n" && npm install
+
 
 COPY . . 
 
