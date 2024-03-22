@@ -55,7 +55,7 @@ export default function Cadastrar() {
       formulario.checkbox_people_ong,
       formulario.nome_organizacao?? "",
       formulario.email,
-   ]).then(dados =>{  push('/projetos/novo') }).catch(dados =>{ alert("Erro, verifique se os dados estão corretamente preenchidos."); console.log(dados)})
+   ]).then(dados =>{  push('/projetos/novo'); }).catch(dados =>{ alert("Erro, verifique se os dados estão corretamente preenchidos."); console.log(dados)})
     return false;
   }
 

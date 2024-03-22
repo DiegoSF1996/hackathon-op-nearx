@@ -32,7 +32,7 @@ async function obterContrato() {
 
     const web3 = new Web3(window.ethereum);
     const abi = ABI.abi;
-    return new web3.eth.Contract(abi, CONTRACT_ADDRESS, { from: wallet, gas: 3000000 });
+    return new web3.eth.Contract(abi, CONTRACT_ADDRESS, { from: wallet});
 }
 
 export async function checarUsuarioJaCadastrado() {
@@ -66,9 +66,24 @@ export async function  obterTodosProjetos(){
     return contract.methods.obterTodosProjetos().call();
 }
 
+export async function  obterProjetoEspecifico(address, indice){
+    const wallet = localStorage.getItem("wallet");
+    if (!wallet) throw new Error("Não autorizado");
+    const contract = await obterContrato();
+    return contract.methods.obterProjetoEspecifico(address, indice).call();
+}
+export async function doarParaProjeto(_endereco_recebedor,_indice_projeto,_valor_doacao){
+    const wallet = localStorage.getItem("wallet");
+    if (!wallet) throw new Error("Não autorizado");
+    const contract = await obterContrato();
+
+    return contract.methods.doar(_endereco_recebedor,_indice_projeto,_valor_doacao).send();
+}
+
 export async function  listarProjetosUsuario(){
     const wallet = localStorage.getItem("wallet");
     if (!wallet) throw new Error("Não autorizado");
     const contract = await obterContrato();
     return contract.methods.listarProjetosUsuario().call();
 }
+
