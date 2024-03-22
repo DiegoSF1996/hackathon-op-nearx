@@ -118,9 +118,12 @@ contract FLAP is ERC20, ERC20Burnable, Ownable, ERC20Permit {
        return projetos_lista;
     }
     
+    function obterProjetoEspecifico(address usuario_criador_projeto, uint256 indice) external view returns (struct_projeto memory){
+        return projeto[usuario_criador_projeto][indice];
+    }
     //doar
 
-    function doar (address _endereco_recebedor, uint256 _indice_projeto, uint256 _valor_doacao) external payable {
+    function doar (address _endereco_recebedor, uint256 _indice_projeto, uint256 _valor_doacao) external returns (bool) {
         validarUsuario();
         struct_projeto memory _projeto = projeto[_endereco_recebedor][_indice_projeto];
         //se enviar um valor e já tiver e a meta ja tiver atingida
@@ -133,6 +136,10 @@ contract FLAP is ERC20, ERC20Burnable, Ownable, ERC20Permit {
 
         projeto[_endereco_recebedor][_indice_projeto].valor_arrecadado += _valor_doacao;
         _burn(msg.sender, _valor_doacao);
+        if(projeto[_endereco_recebedor][_indice_projeto].valor_arrecadado == projeto[_endereco_recebedor][_indice_projeto].meta_valor_arrecadacao){
+           projeto[_endereco_recebedor][_indice_projeto].finalizado = true;
+        }
+        return true;
     }
 
     // transferir doacoes para proprietario do projeto
@@ -140,7 +147,7 @@ contract FLAP is ERC20, ERC20Burnable, Ownable, ERC20Permit {
     function transferirDoacoesParaProprietarioDoProjeto(uint256 _indice_projeto) external {
         validarUsuario();
         struct_projeto memory _projeto = projeto[msg.sender][_indice_projeto];
-        require(_projeto.meta_valor_arrecadacao > _projeto.valor_arrecadado , "Meta de arrecadao nao atingida!");
+        require(_projeto.valor_arrecadado >= _projeto.meta_valor_arrecadacao , "Meta de arrecadao nao atingida!");
         require(_projeto.finalizado != true , "Projeto encerrado");
         _mint(msg.sender, _projeto.valor_arrecadado );
 
