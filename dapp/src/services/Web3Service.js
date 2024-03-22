@@ -51,3 +51,24 @@ export async function obterDadosDoUsuario() {
     const contract = await obterContrato();
     return contract.methods.logar().call();
 }
+
+export async function cadastrarNovoProjeto(dados,tgs) {
+    const wallet = localStorage.getItem("wallet");
+    if (!wallet) throw new Error("Não autorizado");
+    const contract = await obterContrato();
+    return contract.methods.cadastrarNovoProjeto(dados,tgs).send();
+}
+
+export async function  obterTodosProjetos(){
+    const wallet = localStorage.getItem("wallet");
+    if (!wallet) throw new Error("Não autorizado");
+    const contract = await obterContrato();
+    return contract.methods.obterTodosProjetos().call();
+}
+
+export async function  listarProjetosUsuario(){
+    const wallet = localStorage.getItem("wallet");
+    if (!wallet) throw new Error("Não autorizado");
+    const contract = await obterContrato();
+    return contract.methods.listarProjetosUsuario().call();
+}
