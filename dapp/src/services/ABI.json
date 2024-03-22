@@ -344,8 +344,14 @@
                     "internalType": "uint256"
                 }
             ],
-            "outputs": [],
-            "stateMutability": "payable"
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool",
+                    "internalType": "bool"
+                }
+            ],
+            "stateMutability": "nonpayable"
         },
         {
             "type": "function",
@@ -531,6 +537,72 @@
                     "name": "",
                     "type": "uint256",
                     "internalType": "uint256"
+                }
+            ],
+            "stateMutability": "view"
+        },
+        {
+            "type": "function",
+            "name": "obterProjetoEspecifico",
+            "inputs": [
+                {
+                    "name": "usuario_criador_projeto",
+                    "type": "address",
+                    "internalType": "address"
+                },
+                {
+                    "name": "indice",
+                    "type": "uint256",
+                    "internalType": "uint256"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "tuple",
+                    "internalType": "struct FLAP.struct_projeto",
+                    "components": [
+                        {
+                            "name": "nome_projeto",
+                            "type": "string",
+                            "internalType": "string"
+                        },
+                        {
+                            "name": "meta_valor_arrecadacao",
+                            "type": "uint256",
+                            "internalType": "uint256"
+                        },
+                        {
+                            "name": "valor_arrecadado",
+                            "type": "uint256",
+                            "internalType": "uint256"
+                        },
+                        {
+                            "name": "descricao_projeto",
+                            "type": "string",
+                            "internalType": "string"
+                        },
+                        {
+                            "name": "imagem",
+                            "type": "string",
+                            "internalType": "string"
+                        },
+                        {
+                            "name": "site",
+                            "type": "string",
+                            "internalType": "string"
+                        },
+                        {
+                            "name": "finalizado",
+                            "type": "bool",
+                            "internalType": "bool"
+                        },
+                        {
+                            "name": "indice_tags",
+                            "type": "uint256",
+                            "internalType": "uint256"
+                        }
+                    ]
                 }
             ],
             "stateMutability": "view"
