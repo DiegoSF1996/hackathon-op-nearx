@@ -39,6 +39,7 @@ export default function visualizar({ searchParams } = props) {
 
 
   useEffect(() => {
+    console.log(searchParams.address, searchParams.indice);
     obterProjetoEspecifico(searchParams.address, searchParams.indice).then(dados => { setFormulario(dados); console.log(dados) }).catch(() => { alert('Projeto não encontrado'); push('/projetos') });
     obterDadosDoUsuario().then(dados => setDadosUsuario(dados))
   }, [])
