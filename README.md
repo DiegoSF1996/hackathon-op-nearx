@@ -1,6 +1,6 @@
 # Fullstack Web3 
 
-#Oque é esse repositório?
+# Oque é esse repositório?
 
 - Um projeto Web3 (Solidity e reactjs) feito para o hackaton da NearX que permite ligar pessoas com ideias a outras com capital financeiro.
 
